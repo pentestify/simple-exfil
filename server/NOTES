@@ -1,0 +1,21 @@
+##http://superuser.com/questions/440324/iptables-how-to-forward-all-external-ports-to-one-local-port
+
+SERVER_PORT=2000
+
+### Flushing IPTABLES: 
+echo "Stopping firewall and allowing everyone..."
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+
+### Accepting Connections on all ports
+echo "Forwarding all ports to port 2000"
+#iptables -t nat -A PREROUTING -p tcp --dport 1:55521 -j REDIRECT --to-ports $SERVER_PORT
+#iptables -t nat -A PREROUTING -p tcp --dport 55523:65535 -j REDIRECT --to-ports $SERVER_PORT
+iptables -t nat -A PREROUTING -p tcp --dport 1:65535 -j REDIRECT --to-ports $SERVER_PORT
