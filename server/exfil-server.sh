@@ -13,6 +13,7 @@ iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT
 
 # run the server daemon
+killall -9 ruby
 ruby server.rb > server.log &
 
 # Forward all ports to a single port (2000)
